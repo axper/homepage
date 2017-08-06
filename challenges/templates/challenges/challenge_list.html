@@ -1,0 +1,19 @@
+{% block content %}
+    <h1>Challenges</h1>
+
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Name</th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for challenge in object_list %}
+            <tr>
+                <td>{{ challenge.title }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock content %}
