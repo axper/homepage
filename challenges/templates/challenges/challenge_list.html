@@ -4,13 +4,14 @@
     <table class="table">
         <thead>
         <tr>
-            <th>Name</th>
             <th></th>
+            <th>Name</th>
         </tr>
         </thead>
         <tbody>
         {% for challenge in object_list %}
             <tr>
+                <td>{{ challenge.id }}</td>
                 <td>{{ challenge.title }}</td>
             </tr>
         {% endfor %}
