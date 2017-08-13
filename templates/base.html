@@ -1,15 +1,17 @@
 {% load static %}
-{% spaceless %}
-    <!DOCTYPE html>
-    <html>
-    <head>
-        <title>{% block title %}{% endblock %}</title>
-        <link rel="stylesheet" href="{% static "uikit/css/uikit.min.css" %}" />
-        <script src="{% static "uikit/js/uikit.min.js" %}"></script>
-        <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
-    </head>
-    <body>
-        {% block content %}{% endblock %}
-    </body>
-    </html>
-{% endspaceless %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{% block title %}{% endblock %}</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/uikit/3.0.0-beta.28/css/uikit.css"/>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
+    <link rel="icon" type="image/png" href="static/favicon-32x32.png" sizes="32x32"/>
+    <link rel="icon" type="image/png" href="static/favicon-16x16.png" sizes="16x16"/>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/uikit/3.0.0-beta.28/js/uikit.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/uikit/3.0.0-beta.28/js/uikit-icons.js"></script>
+</head>
+<body>
+{% block content %}{% endblock %}
+</body>
+</html>

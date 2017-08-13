@@ -1,0 +1,321 @@
+{% extends "base.html" %}
+
+{% block title %}
+    Babken's Home at Interwebz
+{% endblock %}
+
+{% block content %}
+
+    <div>
+
+        <div class="uk-alert-warning uk-margin-remove" uk-alert>
+            <a class="uk-alert-close" uk-close></a>
+            <p class="uk-text-center">This site is using <b>cookies</b>! Ok not really, I put this message here to look
+                professional. And to annoy you.</p>
+        </div>
+
+        <div class="uk-height-large uk-background-cover uk-light uk-flex" uk-parallax="bgy: -200"
+             style="background-image: url('static/abstract-code.jpg');">
+            <div class="uk-width-auto uk-text-center uk-margin-auto uk-margin-auto-vertical">
+                <h1 class="uk-heading-primary uk-text-uppercase uk-width-auto uk-text-center uk-margin-auto uk-margin-auto-vertical">
+                    Babken Vardanyan</h1>
+                <p class="uk-text-primary">A perfectionist with deadlines.<br/>
+                    <small>(Yes, I just stole Django's motto.)</small>
+                </p>
+            </div>
+        </div>
+
+        <div class="uk-container uk-container-small uk-margin">
+            <div class="uk-grid-match uk-flex-column" id="maincontent" uk-grid>
+                <div>
+                    <div class="uk-section">
+                        <div class="uk-container">
+                            <h2>Overview</h2>
+                            <p>Hi!
+                                <br/><br/>
+                                I am a freelance Python and Java developer. I code for fun and for $$$.
+                                <br/><br/>
+                                I love writing well tested and easy to maintain software. My weapon of choice is Python,
+                                I love
+                                it for it's simplicity, readability and flexibility. I do everything possible to deliver
+                                upon my
+                                promised deadlines and have satisfied clients.
+                                <br/><br/>
+                                I have 2+ years of professional programming experience with Java and Python.
+                                Most of my work experience is writing backend for huge websites with more than 500,000
+                                lines of
+                                code.
+                                <br/><br/>
+                                If you want me to work for you (you do), <a href="#contact">contact me</a>!
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="uk-section" id="work">
+                        <div class="uk-container">
+                            <h2>My Work Experience</h2>
+                            <h3 id="sfl">SFL LLC</h3>
+                            <p>I worked as a <i>Java Backend Developer</i> at <a href="https://sflpro.com/">SFL
+                                LLC</a> for 17 months.
+                                I was involved in several medium-sized teams (6 to 8
+                                people). I was one of the main contributors on all projects and my
+                                colleagues loved me for my dedication and passion.</p>
+                            <h4>Projects</h4>
+                            <ul>
+                                <li>
+                                    <a href="https://sflpro.com/?portfolio=2-5-million-border-checks-in-2015">Bayazet:
+                                        Border Management Information System</a>
+                                </li>
+                                <li>
+                                    <a href="http://callmonkey.com/">CallMonkey: Call Center Software</a>
+                                </li>
+                            </ul>
+                            <h3>Unibank Armenia CJSC</h3>
+                            <p>I have worked as a <i>Information Security Administrator</i> at <a
+                                    href="http://www.unibank.am/">Unibank Armenia CJSC</a> for 8 months.
+                                During my employment Unibank was preparing for <a
+                                        href="https://en.wikipedia.org/wiki/ISO/IEC_27001:2013">ISO/IEC 27001</a>
+                                certification.
+                                My job involved administration and monitoring of several critical security servers and
+                                network infrastructure components and working with the IT team to ensure continuous
+                                operation of systems.
+                                My was also involved in defining company's security policies. The bank has successfully
+                                received the certificate.</p>
+                            <h4>Responsibilities</h4>
+                            <ul>
+                                <li>Pen Testing</li>
+                                <li>Log Analysis</li>
+                                <li>System Monitoring</li>
+                                <li>Change Management</li>
+                                <li>Network Security</li>
+                                <li>Software Security Requirements</li>
+                                <li>New Software Acceptance Testing</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="uk-section">
+                        <div class="uk-container">
+                            <h2>My Education</h2>
+                            <h3>National Academy of Sciences of the Republic of Armenia</h3>
+                            I studied at <a href="http://www.sci.am/index.php?langid=2">NAS RA</a> from 2014 to 2016.
+                            I received my master's degree in <i>Informatics and Computer Engineering</i>.
+                            <h3>State Engineering University of Armenia</h3>
+                            I studied at <a href="http://polytech.am/wpolytech/?lang=en">State Engineering University of
+                            Armenia</a> from 2010 to 2014.
+                            I received my bachelor's degree in <i>Computer Systems and Informatics</i>.
+                            My speciality was <i>Information Security</i>.
+                        </div>
+                    </div>
+
+                    <div class="uk-section">
+                        <div class="uk-container">
+                            <h2>My Portfolio</h2>
+                            <div class="uk-child-width-1-3@m uk-grid-small uk-grid-match" uk-grid>
+                                <div>
+                                    <div class="uk-card uk-card-default uk-card-hover">
+                                        <a href="http://callmonkey.com/">
+                                            <div class="uk-card-media-top">
+                                                <img src="static/callmonkey.jpg" alt=""
+                                                     class="uk-align-center uk-height-small">
+                                            </div>
+                                        </a>
+                                        <div class="uk-card-body">
+                                            <h3 class="uk-card-title"><a href="http://callmonkey.com/">CallMonkey</a>
+                                            </h3>
+                                            <p>CallMonkey is outbound plug & play B2B call center software.
+                                                It strives to ease the life for the people working at call centers.
+                                                I have worked at completely rewriting the backend in Java and
+                                                integrating
+                                                the existing UI.
+                                                CallMonkey is a very complex project underneath the surface. It involves
+                                                many complex algorithmic solutions and
+                                                <a href="http://microservices.io/">Microservices</a> architecture and
+                                                Docker/Kubernetes for deployment.
+                                                I was involved in this project while working at <a href="#sfl">SFL
+                                                    LLC</a>.
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div>
+                                    <div class="uk-card uk-card-default uk-card-hover">
+                                        <a href="https://sflpro.com/?portfolio=2-5-million-border-checks-in-2015">
+                                            <div class="uk-card-media-top">
+                                                <img src="static/bayazet.jpg" alt=""
+                                                     class="uk-align-center uk-height-small">
+                                            </div>
+                                        </a>
+                                        <div class="uk-card-body">
+                                            <h3 class="uk-card-title"><a
+                                                    href="https://sflpro.com/?portfolio=2-5-million-border-checks-in-2015">Bayazet</a>
+                                            </h3>
+                                            <p>Bayazet is a border management information system.
+                                                It uses a distributed system for managing the processes at the
+                                                borders
+                                                as well as visa issuance management.
+                                                Bayazet is a very complicated project technologically and it
+                                                requires a
+                                                large number of complex algorithmic solutions. The requirements from
+                                                the
+                                                perspective of availability, performance and reliability are also
+                                                very
+                                                high.
+                                                I was involved in this project while working at <a href="#sfl">SFL
+                                                    LLC</a>.
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div>
+                                    <div class="uk-card uk-card-default uk-card-hover">
+                                        <a href="https://wiki.archlinux.org/index.php/Special:Contributions/Axper">
+                                            <div class="uk-card-media-top">
+                                                <img src="static/archlinux.png" alt=""
+                                                     class="uk-align-center uk-height-small">
+                                            </div>
+                                        </a>
+                                        <div class="uk-card-body">
+                                            <h3 class="uk-card-title"><a
+                                                    href="https://wiki.archlinux.org/index.php/Special:Contributions/Axper">Arch
+                                                Linux Wiki</a>
+                                            </h3>
+                                            <p>I made several significant contributions to Arch Linux Wiki.
+                                                I have single handedly written several all-encompassing articles from
+                                                scratch about
+                                                <a href="https://wiki.archlinux.org/index.php/Metasploit_Framework">Nmap</a>,
+                                                <a href="https://wiki.archlinux.org/index.php/Metasploit_Framework">Metasploit
+                                                    Framework</a>,
+                                                <a href="https://wiki.archlinux.org/index.php/YouCompleteMe">YouCompleteMe</a>,
+                                                besides correcting and refining countless existing articles.
+                                                I made these contributions before I got a <a href="#work">professional
+                                                    job</a>.
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div>
+                                    <div class="uk-card uk-card-default uk-card-hover">
+                                        <a href="https://github.com/axper">
+                                            <div class="uk-card-media-top">
+                                                <img src="static/github.png" alt=""
+                                                     class="uk-align-center uk-height-small">
+                                            </div>
+                                        </a>
+                                        <div class="uk-card-body">
+                                            <h3 class="uk-card-title"><a
+                                                    href="https://github.com/axper">GitHub</a>
+                                            </h3>
+                                            <p>I have created various tools, scripts, snippets, articles at GitHub both
+                                                during my professional career and while studying at uni.
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div>
+                                    <div class="uk-card uk-card-default uk-card-hover">
+                                        <a href="https://stackoverflow.com/users/2529583/babken-vardanyan">
+                                            <div class="uk-card-media-top">
+                                                <img src="static/stackoverflow.png" alt=""
+                                                     class="uk-align-center uk-height-small">
+                                            </div>
+                                        </a>
+                                        <div class="uk-card-body">
+                                            <h3 class="uk-card-title"><a
+                                                    href="https://stackoverflow.com/users/2529583/babken-vardanyan">Stack
+                                                Overflow</a>
+                                            </h3>
+                                            <p>I have made several contributions to Stack Overflow and other Stack
+                                                Exchange
+                                                sites, both in form of answers as well as questions.
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div>
+                                    <div class="uk-card uk-card-default uk-card-hover">
+                                        <a href="https://www.upwork.com/freelancers/~0115087d475a597f2e">
+                                            <div class="uk-card-media-top">
+                                                <img src="static/upwork.svg" alt=""
+                                                     class="uk-align-center uk-height-small">
+                                            </div>
+                                        </a>
+                                        <div class="uk-card-body">
+                                            <h3 class="uk-card-title"><a
+                                                    href="https://www.upwork.com/freelancers/~0115087d475a597f2e">Upwork</a>
+                                            </h3>
+                                            <p>See my projects at Upwork here!
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="uk-section">
+                        <div class="uk-container">
+                            <h2>My Skills</h2>
+                            <p>I know a lot!</p>
+                        </div>
+                    </div>
+
+                    <div class="uk-section">
+                        <div class="uk-container">
+                            <h2>My Languages</h2>
+                            <ol>
+                                <li>Հայերեն</li>
+                                <li>English (TOEFL score: 109/120)</li>
+                                <li>Русский</li>
+                                <li>Deutsch</li>
+                                <li>ქართული</li>
+                            </ol>
+                        </div>
+                    </div>
+
+                    <div class="uk-section">
+                        <div class="uk-container">
+                            <h2>My Resume</h2>
+                            <a href="https://github.com/axper/cv/raw/master/babken-vardanyan.pdf"
+                               class="uk-button uk-button-primary uk-button-large">Download CV in PDF</a>
+                        </div>
+                    </div>
+
+                    <div class="uk-section" id="contact">
+                        <div class="uk-container">
+                            <h2>Contact Me!</h2>
+                            <ul>
+                                <li><span uk-icon="icon: mail"></span> <code>babken</code> <code>vardanyan</code> <code>94</code>
+                                    <span uk-icon="icon: future"></span> gmail (remove spaces)
+                                </li>
+                                <li><a href="tel:+37498399434"><span uk-icon="icon: whatsapp"></span> +374 98
+                                    39-94-34</a></li>
+                                <li><a href="https://linkedin.com/in/babkenvardanyan"><span
+                                        uk-icon="icon: linkedin"></span> LinkedIn</a></li>
+                                <li><a href="https://github.com/axper"><span uk-icon="icon: github-alt"></span>
+                                    GitHub</a></li>
+                                <li><a href="https://stackoverflow.com/users/2529583"><span
+                                        uk-icon="icon: soundcloud"></span> StackExchange</a></li>
+                                <li><a href="https://www.upwork.com/freelancers/~0115087d475a597f2e"><span
+                                        uk-icon="icon: soundcloud"></span> Upwork</a></li>
+                            </ul>
+                        </div>
+                    </div>
+
+                </div>
+                <div>
+                    <div class="uk-grid uk-flex-center uk-flex-middle uk-height-small uk-background-secondary">
+                        <ul class="uk-iconnav">
+                            <li><a href="#" uk-icon="icon: facebook"></a></li>
+                            <li><a href="#" uk-icon="icon: linkedin"></a></li>
+                            <li><a href="#" uk-icon="icon: github"></a></li>
+                            <li><a href="#" uk-icon="icon: twitter"></a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+{% endblock %}
