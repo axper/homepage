@@ -152,3 +152,6 @@ typings/
 ## Custom
 .idea
 db.sqlite3
+
+staticroot/*
+!staticroot/.gitkeep
