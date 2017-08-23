@@ -7,8 +7,10 @@
   - name: ensure nginx is at the latest version
     apt: name=nginx state=latest
   - name: django collect static files to root static directory
-    django_manage: virtualenv=~/.virtualenvs/homepage app_path="/srv/http/homepage" command=collectstatic
+    django_manage: virtualenv=/root/.virtualenvs/homepage app_path=/srv/http/homepage command=collectstatic
   - name: link homepage_nginx.conf to nginx's config dir in /etc
     file: src=/srv/http/homepage/deploy/homepage_nginx.conf dest=/etc/nginx/sites-enabled/homepage_nginx.conf state=link
+  - name: restart gunicorn using supervisord
+    supervisorctl: name=gunicorn state=restarted config=/srv/http/homepage/deploy/supervisord.conf
   - name: restart nginx and make sure it's enabled
     service: name=nginx state=restarted enabled=yes
