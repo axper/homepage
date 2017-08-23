@@ -4,8 +4,10 @@
   tasks:
   - name: update homepage git repo to latest master (HEAD) version from github
     git: repo=https://github.com/axper/homepage.git dest=/srv/http/homepage version=HEAD
-  - name: ensure nginx is at the latest version
+  - name: ensure nginx package is at the latest version
     apt: name=nginx state=latest
+  - name: ensure supervisor package is at the latest version
+    apt: name=supervisor state=latest
   - name: django collect static files to root static directory
     django_manage: virtualenv=/root/.virtualenvs/homepage app_path=/srv/http/homepage command=collectstatic
   - name: link homepage_nginx.conf to nginx's config dir in /etc
