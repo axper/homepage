@@ -153,5 +153,9 @@ typings/
 .idea
 db.sqlite3
 
-staticroot/*
-!staticroot/.gitkeep
+## Static files
+static/*
+!static/robots.txt
+!static/favicon*.ico
+!static/favicon*.png
+!static/uikit
