@@ -4,6 +4,8 @@
     Babken's Home at Interwebz
 {% endblock %}
 
+{% load static %}
+
 {% block content %}
 
     <div>
@@ -14,8 +16,9 @@
                 professional. And to annoy you.</p>
         </div>
 
+        <!-- TODO: move .jpg's and other relevant files to 'resume' sub-dir -->
         <div class="uk-height-large uk-background-cover uk-light uk-flex" uk-parallax="bgy: -200"
-             style="background-image: url('static/abstract-code.jpg');">
+             style="background-image: url('{% static 'abstract-code.jpg' %}');">
             <div class="uk-width-auto uk-text-center uk-margin-auto uk-margin-auto-vertical">
                 <h1 class="uk-heading-primary uk-text-uppercase uk-width-auto uk-text-center uk-margin-auto uk-margin-auto-vertical">
                     Babken Vardanyan</h1>
@@ -116,7 +119,7 @@
                                     <div class="uk-card uk-card-default uk-card-hover">
                                         <a href="http://callmonkey.com/">
                                             <div class="uk-card-media-top">
-                                                <img src="static/callmonkey.jpg" alt=""
+                                                <img src="{% static 'callmonkey.jpg' %}" alt=""
                                                      class="uk-align-center uk-height-small">
                                             </div>
                                         </a>
@@ -142,7 +145,7 @@
                                     <div class="uk-card uk-card-default uk-card-hover">
                                         <a href="https://sflpro.com/?portfolio=2-5-million-border-checks-in-2015">
                                             <div class="uk-card-media-top">
-                                                <img src="static/bayazet.jpg" alt=""
+                                                <img src="{% static 'bayazet.jpg' %}" alt=""
                                                      class="uk-align-center uk-height-small">
                                             </div>
                                         </a>
@@ -171,7 +174,7 @@
                                     <div class="uk-card uk-card-default uk-card-hover">
                                         <a href="https://wiki.archlinux.org/index.php/Special:Contributions/Axper">
                                             <div class="uk-card-media-top">
-                                                <img src="static/archlinux.png" alt=""
+                                                <img src="{% static 'archlinux.png' %}" alt=""
                                                      class="uk-align-center uk-height-small">
                                             </div>
                                         </a>
@@ -198,7 +201,7 @@
                                     <div class="uk-card uk-card-default uk-card-hover">
                                         <a href="https://github.com/axper">
                                             <div class="uk-card-media-top">
-                                                <img src="static/github.png" alt=""
+                                                <img src="{% static 'github.png' %}" alt=""
                                                      class="uk-align-center uk-height-small">
                                             </div>
                                         </a>
@@ -216,7 +219,7 @@
                                     <div class="uk-card uk-card-default uk-card-hover">
                                         <a href="https://stackoverflow.com/users/2529583/babken-vardanyan">
                                             <div class="uk-card-media-top">
-                                                <img src="static/stackoverflow.png" alt=""
+                                                <img src="{% static 'stackoverflow.png' %}" alt=""
                                                      class="uk-align-center uk-height-small">
                                             </div>
                                         </a>
@@ -236,7 +239,8 @@
                                     <div class="uk-card uk-card-default uk-card-hover">
                                         <a href="https://www.upwork.com/freelancers/~0115087d475a597f2e">
                                             <div class="uk-card-media-top">
-                                                <img src="static/upwork.svg" alt=""
+                                                <!-- TODO: Standardize and optimize image formats -->
+                                                <img src="{% static 'upwork.svg' %}" alt=""
                                                      class="uk-align-center uk-height-small">
                                             </div>
                                         </a>
