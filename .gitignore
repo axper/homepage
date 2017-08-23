@@ -159,3 +159,6 @@ static/*
 !static/favicon*.ico
 !static/favicon*.png
 !static/uikit
+
+## Ansible retry files
+deploy/*.retry

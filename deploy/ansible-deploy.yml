@@ -1,0 +1,14 @@
+---
+- hosts: babken.org
+  remote_user: root
+  tasks:
+  - name: update homepage git repo to latest master (HEAD) version from github
+    git: repo=https://github.com/axper/homepage.git dest=/srv/http/homepage version=HEAD
+  - name: ensure nginx is at the latest version
+    apt: name=nginx state=latest
+  - name: django collect static files to root static directory
+    django_manage: virtualenv=~/.virtualenvs/homepage app_path="/srv/http/homepage" command=collectstatic
+  - name: link homepage_nginx.conf to nginx's config dir in /etc
+    file: src=/srv/http/homepage/deploy/homepage_nginx.conf dest=/etc/nginx/sites-enabled/homepage_nginx.conf state=link
+  - name: restart nginx and make sure it's enabled
+    service: name=nginx state=restarted enabled=yes
