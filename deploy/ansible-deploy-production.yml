@@ -2,18 +2,30 @@
 - hosts: babken.org
   remote_user: root
   tasks:
-  - name: update homepage git repo to latest master (HEAD) version from github
-    git: repo=https://github.com/axper/homepage.git dest=/srv/http/homepage version=HEAD
+  # Install packages
+  - name: ensure git package is at the latest version
+    apt: name=git state=latest
+  - name: ensure virtualenv package is at the latest version
+    apt: name=virtualenv state=latest
   - name: ensure nginx package is at the latest version
     apt: name=nginx state=latest
   - name: ensure supervisor package is at the latest version
     apt: name=supervisor state=latest
+  # Fetch git repo
+  - name: update homepage git repo to latest master (HEAD) version from github
+    git: repo=https://github.com/axper/homepage.git dest=/srv/http/homepage version=HEAD
+  # Deploy
+  - name: create virtualenv
+    pip: virtualenv=/root/.virtualenvs/homepage requirements=/srv/http/homepage/deploy/requirements.txt
   - name: django collect static files to root static directory
     django_manage: virtualenv=/root/.virtualenvs/homepage app_path=/srv/http/homepage command=collectstatic
+  - name: remove default nginx site
+    file: path=/etc/nginx/sites-enabled/default state=absent
   - name: link nginx.conf to nginx's config dir in /etc
     file: src=/srv/http/homepage/deploy/nginx.conf dest=/etc/nginx/sites-enabled/homepage.conf state=link
   - name: link supervisor.conf to supervisor's config dir in /etc
     file: src=/srv/http/homepage/deploy/supervisor.conf dest=/etc/supervisor/conf.d/homepage.conf state=link
+  # Restart web servers
   - name: restart supervisor service
     service: name=supervisor state=restarted enabled=yes
   - name: restart nginx and make sure it's enabled
