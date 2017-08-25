@@ -26,7 +26,7 @@
   - name: link supervisor.conf to supervisor's config dir in /etc
     file: src=/srv/http/homepage/deploy/supervisor.conf dest=/etc/supervisor/conf.d/homepage.conf state=link
   # Restart web servers
-  - name: restart supervisor service
+  - name: restart and enable supervisor service
     service: name=supervisor state=restarted enabled=yes
-  - name: restart nginx and make sure it's enabled
+  - name: restart and enable nginx service
     service: name=nginx state=restarted enabled=yes
