@@ -1,5 +1,5 @@
 ---
-- hosts: babken.org
+- hosts: lazydevelo.com
   remote_user: root
   tasks:
   # Install packages
