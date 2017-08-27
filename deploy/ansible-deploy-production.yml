@@ -15,7 +15,7 @@
     git: repo=https://github.com/axper/homepage.git dest=/srv/http/homepage version=HEAD
   # Deploy
   - name: copy django secret key to server
-    copy: content="{{ django_secret_key }}" dest=/srv/http/homepage/deploy/django_secret_key.txt mode=0600
+    copy: content="{{ django_secret_key }}" dest=/srv/http/homepage/deploy/django-secret-key.txt mode=0600
   - name: create virtualenv
     pip: virtualenv=/root/.virtualenvs/homepage requirements=/srv/http/homepage/deploy/requirements.txt
   - name: django collect static files
