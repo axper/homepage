@@ -163,3 +163,6 @@ static/*
 
 ## Ansible retry files
 deploy/*.retry
+
+# Django secret key
+deploy/django-secret-key.txt
