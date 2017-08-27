@@ -22,10 +22,10 @@
     pip: virtualenv=/root/.virtualenvs/homepage requirements=/srv/http/homepage/deploy/requirements.txt
   - name: django collect static files
     django_manage: virtualenv=/root/.virtualenvs/homepage app_path=/srv/http/homepage command=collectstatic
-    environment: "{{django_env}}"
+    environment: "{{ django_env }}"
   - name: django migrate
     django_manage: virtualenv=/root/.virtualenvs/homepage app_path=/srv/http/homepage command=migrate
-    environment: "{{django_env}}"
+    environment: "{{ django_env }}"
   - name: remove default nginx site
     file: path=/etc/nginx/sites-enabled/default state=absent
   - name: link nginx.conf to nginx's config dir in /etc
@@ -35,5 +35,6 @@
   # Restart web servers
   - name: restart and enable supervisor service
     service: name=supervisor state=restarted enabled=yes
+    environment: "{{ django_env }}"
   - name: restart and enable nginx service
     service: name=nginx state=restarted enabled=yes
