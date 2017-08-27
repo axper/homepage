@@ -24,6 +24,11 @@
     django_manage: virtualenv=/root/.virtualenvs/homepage app_path=/srv/http/homepage command=migrate
   - name: remove default nginx site
     file: path=/etc/nginx/sites-enabled/default state=absent
+  - name: link django production config
+    file:
+      src: /srv/http/homepage/homepage/settings/available/production.conf
+      dest: /srv/http/homepage/homepage/settings/components/production.conf
+      state: link
   - name: link nginx.conf to nginx's config dir in /etc
     file: src=/srv/http/homepage/deploy/nginx.conf dest=/etc/nginx/sites-enabled/homepage.conf state=link
   - name: link supervisor.conf to supervisor's config dir in /etc
