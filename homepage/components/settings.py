@@ -122,7 +122,7 @@ STATICFILES_DIRS = [
 ]
 
 # Where 'manage.py collectstatic' will copy files
-STATIC_ROOT = os.path.join(BASE_DIR, "static")
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 # Will be displayed on the main dashboard of the Wagtail admin backend
 WAGTAIL_SITE_NAME = 'Babken \'s homepage'
