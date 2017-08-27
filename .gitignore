@@ -1,6 +1,7 @@
 ### Python template
 # Byte-compiled / optimized / DLL files
 __pycache__/
+*.py[cod]
 *$py.class
 
 # C extensions
@@ -162,3 +163,6 @@ static/*
 
 ## Ansible retry files
 deploy/*.retry
+
+# Django secret key
+deploy/django-secret-key.txt

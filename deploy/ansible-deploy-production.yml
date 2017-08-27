@@ -1,9 +1,6 @@
 ---
 - hosts: lazydevelo.com
-  remote_user: root
-  vars:
-    django_env:
-      DJANGO_SECRET_KEY: "{{ django_secret_key }}"
+  remote_user: "{{ ansible_user }}"
   tasks:
   # Install packages
   - name: ensure git package is at the latest version
@@ -14,18 +11,17 @@
     apt: name=nginx state=latest
   - name: ensure supervisor package is at the latest version
     apt: name=supervisor state=latest
-  # Fetch git repo
   - name: update homepage git repo to latest master (HEAD) version from github
     git: repo=https://github.com/axper/homepage.git dest=/srv/http/homepage version=HEAD
   # Deploy
+  - name: copy django secret key to server
+    copy: content="{{ django_secret_key }}" dest=/srv/http/homepage/deploy/django_secret_key.txt mode=0600
   - name: create virtualenv
     pip: virtualenv=/root/.virtualenvs/homepage requirements=/srv/http/homepage/deploy/requirements.txt
   - name: django collect static files
     django_manage: virtualenv=/root/.virtualenvs/homepage app_path=/srv/http/homepage command=collectstatic
-    environment: "{{ django_env }}"
   - name: django migrate
     django_manage: virtualenv=/root/.virtualenvs/homepage app_path=/srv/http/homepage command=migrate
-    environment: "{{ django_env }}"
   - name: remove default nginx site
     file: path=/etc/nginx/sites-enabled/default state=absent
   - name: link nginx.conf to nginx's config dir in /etc
@@ -33,8 +29,9 @@
   - name: link supervisor.conf to supervisor's config dir in /etc
     file: src=/srv/http/homepage/deploy/supervisor.conf dest=/etc/supervisor/conf.d/homepage.conf state=link
   # Restart web servers
-  - name: restart and enable supervisor service
-    service: name=supervisor state=restarted enabled=yes
-    environment: "{{ django_env }}"
+  - name: start and enable supervisor service
+    service: name=supervisor state=started enabled=yes
+  - name: restart gunicorn program in supervisor
+    supervisorctl: name=gunicorn state=restarted
   - name: restart and enable nginx service
     service: name=nginx state=restarted enabled=yes
