@@ -11,4 +11,6 @@ site's domain name)
 `/etc/ansible/host_vars/DOMAIN_NAME.yml`,  optionally encrypt it with
 ansible-vault, see
 http://docs.ansible.com/ansible/latest/playbooks_vault.html
-6. Run `ansible deploy/ansible-deploy-production.yml`
+6. To speed up ansible optionally set `pipelining = True` in
+`/etc/ansible/ansible.cfg`.
+7. Run `ansible deploy/ansible-deploy-production.yml`
