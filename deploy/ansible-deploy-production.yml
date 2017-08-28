@@ -2,6 +2,7 @@
 - hosts: lazydevelo.com
   remote_user: "{{ ansible_user }}"
   tasks:
+
   # Install packages
   - name: ensure git package is at the latest version
     apt: name=git state=latest
@@ -13,8 +14,10 @@
     apt: name=supervisor state=latest
   - name: update homepage git repo to latest master (HEAD) version from github
     git: repo=https://github.com/axper/homepage.git dest=/srv/http/homepage version=HEAD
-  # Deploy
+
+  # Prepare Django
   - name: copy django secret key to server
+    # Here django_secret_key is read from hosts's ansible config
     copy: content="{{ django_secret_key }}" dest=/srv/http/homepage/deploy/django-secret-key.txt mode=0600
   - name: create virtualenv
     pip: virtualenv=/root/.virtualenvs/homepage requirements=/srv/http/homepage/deploy/requirements.txt
@@ -22,17 +25,40 @@
     django_manage: virtualenv=/root/.virtualenvs/homepage app_path=/srv/http/homepage command=collectstatic
   - name: django migrate
     django_manage: virtualenv=/root/.virtualenvs/homepage app_path=/srv/http/homepage command=migrate
+
+  # Create Django superuser if does not already exist
+  - name: check whether django superuser already exists
+    stat: path=/etc/django-superuser-created
+    register: django_superuser_already_exists
+  - name: print whether django superuser already exists
+    debug:
+      msg: "Django superuser exists: {{ django_superuser_already_exists }}"
+  - name: django create superuser
+    django_manage:
+      virtualenv: /root/.virtualenvs/homepage
+      app_path: /srv/http/homepage
+      command: "createsuperuser --noinput --username=admin --email=admin@{{ inventory_hostname }}"
+    when: django_superuser_already_exists.stat.exists == False
+    register: django_superuser_created
+  - name: mark django superuser created
+    file: path=/etc/django-superuser-created state=touch
+    when: django_superuser_created|success
+
+  # Configure NginX
   - name: remove default nginx site
     file: path=/etc/nginx/sites-enabled/default state=absent
+  - name: link nginx.conf to nginx's config dir in /etc
+    file: src=/srv/http/homepage/deploy/nginx.conf dest=/etc/nginx/sites-enabled/homepage.conf state=link
+
+  # Configure Gunicorn/Supervisor
   - name: link django production config
     file:
       src: /srv/http/homepage/homepage/settings/available/production.py
       dest: /srv/http/homepage/homepage/settings/components/production.py
       state: link
-  - name: link nginx.conf to nginx's config dir in /etc
-    file: src=/srv/http/homepage/deploy/nginx.conf dest=/etc/nginx/sites-enabled/homepage.conf state=link
   - name: link supervisor.conf to supervisor's config dir in /etc
     file: src=/srv/http/homepage/deploy/supervisor.conf dest=/etc/supervisor/conf.d/homepage.conf state=link
+
   # Restart web servers
   - name: start and enable supervisor service
     service: name=supervisor state=started enabled=yes
