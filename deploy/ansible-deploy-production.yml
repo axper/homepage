@@ -1,8 +1,14 @@
 ---
 - hosts: lazydevelo.com
-  remote_user: "{{ ansible_user }}"
+  vars:
+    # ansible_user: set this variable in /etc/ansible/host_vars/lazydevelo.com.yml
+    # django_secret_key: set this variable in /etc/ansible/host_vars/lazydevelo.com.yml
+    repo: https://github.com/axper/homepage.git
+    app_dir: /srv/http/homepage
+    venv_dir: /root/.virtualenvs/homepage
+    django_settings: homepage.settings
+    admin_username: admin3
   tasks:
-
   # Install packages
   - name: ensure git package is at the latest version
     apt: name=git state=latest
@@ -10,59 +16,125 @@
     apt: name=virtualenv state=latest
   - name: ensure nginx package is at the latest version
     apt: name=nginx state=latest
+    notify:
+    - restart nginx
   - name: ensure supervisor package is at the latest version
     apt: name=supervisor state=latest
-  - name: update homepage git repo to latest master (HEAD) version from github
-    git: repo=https://github.com/axper/homepage.git dest=/srv/http/homepage version=HEAD
+    notify:
+    - restart supervisor
+  - name: ensure expect package is at the latest version
+    apt: name=expect state=latest
+  - name: ensure pwgen package is at the latest version
+    apt: name=pwgen state=latest
+
+  # Fetch git repo
+  - name: update github repo to latest master version
+    git: repo="{{ repo }}" dest="{{ app_dir }}" version=HEAD
+    notify:
+    - restart supervisor
+    - restart gunicorn
+    - restart nginx
 
   # Prepare Django
   - name: copy django secret key to server
     # Here django_secret_key is read from hosts's ansible config
-    copy: content="{{ django_secret_key }}" dest=/srv/http/homepage/deploy/django-secret-key.txt mode=0600
+    copy: content="{{ django_secret_key }}" dest="{{ app_dir }}/deploy/django-secret-key.txt" mode=0600
   - name: create virtualenv
-    pip: virtualenv=/root/.virtualenvs/homepage requirements=/srv/http/homepage/deploy/requirements.txt
+    pip: virtualenv="{{ venv_dir }}" requirements="{{ app_dir }}/deploy/requirements.txt"
   - name: django collect static files
-    django_manage: virtualenv=/root/.virtualenvs/homepage app_path=/srv/http/homepage command=collectstatic
+    django_manage: virtualenv="{{ venv_dir }}" app_path="{{ app_dir }}" command=collectstatic
   - name: django migrate
-    django_manage: virtualenv=/root/.virtualenvs/homepage app_path=/srv/http/homepage command=migrate
+    django_manage: virtualenv="{{ venv_dir }}" app_path="{{ app_dir }}" command=migrate
 
-  # Create Django superuser if does not already exist
-  - name: check whether django superuser already exists
-    stat: path=/etc/django-superuser-created
-    register: django_superuser_already_exists
-  - name: print whether django superuser already exists
-    debug:
-      msg: "Django superuser exists: {{ django_superuser_already_exists }}"
+  # Create Django superuser with default password if does not already exist
+  # I strongly recommend you change the password as soon as possible
+  - name: check if django superuser exists
+    shell: echo "from django.contrib.auth.models import User; print(User.objects.filter(username='{{ admin_username }}').exists())" | {{ venv_dir }}/bin/python manage.py shell
+    args:
+      chdir: "{{ app_dir }}"
+    environment:
+      DJANGO_SETTINGS_MODULE: "{{ django_settings }}"
+    register: superuser_check_output
+  - name: set superuser_exists boolean
+    set_fact:
+      superuser_exists: "{{ superuser_check_output.stdout.find(\"True\") == 0 }}"
   - name: django create superuser
+    when: not superuser_exists
     django_manage:
-      virtualenv: /root/.virtualenvs/homepage
-      app_path: /srv/http/homepage
-      command: "createsuperuser --noinput --username=admin --email=admin@{{ inventory_hostname }}"
-    when: django_superuser_already_exists.stat.exists == False
-    register: django_superuser_created
-  - name: mark django superuser created
-    file: path=/etc/django-superuser-created state=touch
-    when: django_superuser_created|success
+      virtualenv: "{{ venv_dir }}"
+      app_path: "{{ app_dir }}"
+      command: "createsuperuser --noinput --username={{ admin_username }} --email={{ admin_username }}@{{ inventory_hostname }}"
+  - name: genreate random password for admin
+    when: not superuser_exists
+    shell: pwgen -1 --no-vowels --ambiguous --secure --numerals --capitalize 15
+    register: admin_password_output
+  - name: get random password from stdout
+    when: not superuser_exists
+    set_fact:
+      admin_password: "{{ admin_password_output.stdout }}"
+  - name: print the new password
+    when: not superuser_exists
+    debug:
+      msg:
+      - "Created new password for new user {{ admin_username }}: {{ admin_password }}"
+      - "I strongly recommend you change the password as soon as possible."
+  - name: expand change password shell file jinja2 template
+    when: not superuser_exists
+    template: src=changepassword.sh.j2 dest="{{ app_dir }}/deploy/changepassword.sh" mode=0755
+  - name: change superuser password
+    when: not superuser_exists
+    command: "{{ app_dir }}/deploy/changepassword.sh"
+    args:
+      chdir: "{{ app_dir }}"
+    environment:
+      DJANGO_SETTINGS_MODULE: "{{ django_settings }}"
+  - name: remove changepassword shell file
+    when: not superuser_exists
+    file: path="{{ app_dir }}/deploy/changepassword.sh" state=absent
 
   # Configure NginX
   - name: remove default nginx site
     file: path=/etc/nginx/sites-enabled/default state=absent
+    notify:
+    - restart nginx
   - name: link nginx.conf to nginx's config dir in /etc
-    file: src=/srv/http/homepage/deploy/nginx.conf dest=/etc/nginx/sites-enabled/homepage.conf state=link
-
-  # Configure Gunicorn/Supervisor
-  - name: link django production config
     file:
-      src: /srv/http/homepage/homepage/settings/available/production.py
-      dest: /srv/http/homepage/homepage/settings/components/production.py
+      src: "{{ app_dir }}/deploy/nginx.conf"
+      dest: "/etc/nginx/sites-enabled/homepage.conf"
       state: link
-  - name: link supervisor.conf to supervisor's config dir in /etc
-    file: src=/srv/http/homepage/deploy/supervisor.conf dest=/etc/supervisor/conf.d/homepage.conf state=link
+    notify:
+    - restart nginx
 
-  # Restart web servers
+  # Configure Django
+  - name: enable django production config
+    file:
+      src: "{{ app_dir }}/homepage/settings/available/production.py"
+      dest: "{{ app_dir }}/homepage/settings/components/production.py"
+      state: link
+    notify:
+    - restart gunicorn
+
+  # Configure Supervisor
+  - name: link supervisor.conf to supervisor's config dir in /etc
+    file:
+      src: "{{ app_dir }}/deploy/supervisor.conf"
+      dest: "/etc/supervisor/conf.d/homepage.conf"
+      state: link
+    notify:
+    - restart supervisor
+
+  # Start web servers
   - name: start and enable supervisor service
     service: name=supervisor state=started enabled=yes
-  - name: restart gunicorn program in supervisor
+  - name: start gunicorn program in supervisor
+    supervisorctl: name=gunicorn state=started
+  - name: start and enable nginx service
+    service: name=nginx state=started enabled=yes
+
+  handlers:
+  - name: restart supervisor
+    service: name=supervisor state=restarted
+  - name: restart gunicorn
     supervisorctl: name=gunicorn state=restarted
-  - name: restart and enable nginx service
-    service: name=nginx state=restarted enabled=yes
+  - name: restart nginx
+    service: name=nginx state=restarted
