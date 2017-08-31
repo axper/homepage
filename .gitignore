@@ -166,3 +166,6 @@ deploy/*.retry
 
 # Django secret key
 deploy/django-secret-key.txt
+
+# Media files uploaded by the user
+media/

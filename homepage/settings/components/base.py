@@ -125,5 +125,9 @@ STATICFILES_DIRS = [
 # Where 'manage.py collectstatic' will copy files
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
+# Media files, which are uploaded by the user
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
 # Will be displayed on the main dashboard of the Wagtail admin backend
 WAGTAIL_SITE_NAME = 'Babken \'s homepage'
