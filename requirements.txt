@@ -1,0 +1,4 @@
+Django>=1.11,<1.12
+django-split-settings==0.2.5
+gunicorn>=19.7,<19.8
+wagtail>=1.12,<1.13
