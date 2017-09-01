@@ -40,7 +40,7 @@
     # Here django_secret_key is read from hosts's ansible config
     copy: content="{{ django_secret_key }}" dest="{{ app_dir }}/deploy/django-secret-key.txt" mode=0600
   - name: create virtualenv
-    pip: virtualenv="{{ venv_dir }}" requirements="{{ app_dir }}/deploy/requirements.txt"
+    pip: virtualenv="{{ venv_dir }}" requirements="{{ app_dir }}/requirements.txt"
   - name: django collect static files
     django_manage: virtualenv="{{ venv_dir }}" app_path="{{ app_dir }}" command=collectstatic
   - name: django migrate
