@@ -114,15 +114,6 @@
     notify:
     - restart nginx
 
-  # Configure Django
-  - name: enable django production config
-    file:
-      src: "{{ app_dir }}/homepage/settings/available/production.py"
-      dest: "{{ app_dir }}/homepage/settings/components/production.py"
-      state: link
-    notify:
-    - restart gunicorn
-
   # Configure Supervisor
   - name: link supervisor.conf to supervisor's config dir in /etc
     file:
