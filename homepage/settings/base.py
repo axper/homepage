@@ -12,22 +12,8 @@ https://docs.djangoproject.com/en/1.11/ref/settings/
 
 import os
 
-# This project uses django-split-settings module. See the __init__.py in this directory
-
-# Build paths inside the project like this: os.path.join(BASE_DIR, ...)
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/1.11/howto/deployment/checklist/
-
-SECRET_KEY = 'development'
-
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
-
-ALLOWED_HOSTS = []
-
-# Application definition
+PROJECT_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+BASE_DIR = os.path.dirname(PROJECT_DIR)
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -118,16 +104,13 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
 
-STATIC_URL = '/static/'
 STATICFILES_DIRS = [
 ]
 
-# Where 'manage.py collectstatic' will copy files
+STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
-# Media files, which are uploaded by the user
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
-# Will be displayed on the main dashboard of the Wagtail admin backend
 WAGTAIL_SITE_NAME = 'Babken \'s homepage'

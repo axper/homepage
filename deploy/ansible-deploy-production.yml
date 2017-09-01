@@ -6,7 +6,7 @@
     repo: https://github.com/axper/homepage.git
     app_dir: /srv/http/homepage
     venv_dir: /root/.virtualenvs/homepage
-    django_settings: homepage.settings
+    django_settings: homepage.settings.production
     admin_username: admin3
   tasks:
   # Install packages
@@ -42,9 +42,17 @@
   - name: create virtualenv
     pip: virtualenv="{{ venv_dir }}" requirements="{{ app_dir }}/requirements.txt"
   - name: django collect static files
-    django_manage: virtualenv="{{ venv_dir }}" app_path="{{ app_dir }}" command=collectstatic
+    django_manage:
+      virtualenv: "{{ venv_dir }}"
+      app_path: "{{ app_dir }}"
+      settings: "{{ django_settings }}"
+      command: collectstatic
   - name: django migrate
-    django_manage: virtualenv="{{ venv_dir }}" app_path="{{ app_dir }}" command=migrate
+    django_manage:
+      virtualenv: "{{ venv_dir }}"
+      app_path: "{{ app_dir }}"
+      settings: "{{ django_settings }}"
+      command: migrate
 
   # Create Django superuser with default password if does not already exist
   # I strongly recommend you change the password as soon as possible
@@ -63,6 +71,7 @@
     django_manage:
       virtualenv: "{{ venv_dir }}"
       app_path: "{{ app_dir }}"
+      settings: "{{ django_settings }}"
       command: "createsuperuser --noinput --username={{ admin_username }} --email={{ admin_username }}@{{ inventory_hostname }}"
   - name: genreate random password for admin
     when: not superuser_exists
