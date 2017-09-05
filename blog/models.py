@@ -1,5 +1,6 @@
 from django import forms
 from django.db import models
+from django.db.models import TextField
 from modelcluster.contrib.taggit import ClusterTaggableManager
 from modelcluster.fields import ParentalKey, ParentalManyToManyField
 from taggit.models import TaggedItemBase
@@ -9,6 +10,18 @@ from wagtail.wagtailcore.models import Page, Orderable
 from wagtail.wagtailimages.edit_handlers import ImageChooserPanel
 from wagtail.wagtailsearch import index
 from wagtail.wagtailsnippets.models import register_snippet
+
+
+class ResumePage(Page):
+    name = TextField(default='Name Surname')
+    sub_heading = TextField(default='Highly trained monkey')
+    sub_sub_heading = TextField(default='Also a programmer')
+
+    content_panels = Page.content_panels + [
+        FieldPanel('name'),
+        FieldPanel('sub_heading'),
+        FieldPanel('sub_sub_heading'),
+    ]
 
 
 class BlogIndexPage(Page):
@@ -103,6 +116,3 @@ class BlogCategory(models.Model):
 
     def __str__(self):
         return self.name
-
-    class Meta:
-        verbose_name_plural = 'blog categories'

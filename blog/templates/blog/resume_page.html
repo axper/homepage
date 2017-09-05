@@ -1,23 +1,24 @@
 {% extends "base.html" %}
 
+{% spaceless %}
+
 {% block title %}
-    Lazy Developer: Babken's Homepage
+    {{ page.title }}
 {% endblock %}
 
-{% load static %}
+{% load static wagtailcore_tags %}
 
 {% block content %}
 
     <div>
 
         <div class="uk-height-large uk-background-cover uk-light uk-flex" data-uk-parallax="bgy: -200"
-             style="background-image: url('{% static 'resume/abstract-code.jpg' %}');">
+             style="background-image: url('{% static 'blog/abstract-code.jpg' %}');">
             <div class="uk-width-auto uk-text-center uk-margin-auto uk-margin-auto-vertical">
                 <h1 class="uk-heading-primary uk-text-uppercase uk-width-auto uk-text-center uk-margin-auto uk-margin-auto-vertical">
-                    Babken Vardanyan</h1>
-                <p class="uk-text-primary">A perfectionist with deadlines.<br/>
-                    <small>(Yes, I just stole Django's motto.)</small>
-                </p>
+                    {{ page.name }}</h1>
+                <p>{{ page.sub_heading }}</p>
+                <p><small>{{ page.sub_sub_heading }}</small></p>
             </div>
         </div>
 
@@ -132,7 +133,7 @@
                                     <div class="uk-card uk-card-default uk-card-hover" id="portfolio-callmonkey">
                                         <a href="http://callmonkey.com/">
                                             <div class="uk-card-media-top">
-                                                <img src="{% static 'resume/callmonkey.jpg' %}" alt=""
+                                                <img src="{% static 'blog/callmonkey.jpg' %}" alt=""
                                                      class="uk-align-center uk-height-small">
                                             </div>
                                         </a>
@@ -175,7 +176,7 @@
                                     <div class="uk-card uk-card-default uk-card-hover" id="portfolio-bayazet">
                                         <a href="https://sflpro.com/?portfolio=2-5-million-border-checks-in-2015">
                                             <div class="uk-card-media-top">
-                                                <img src="{% static 'resume/bayazet.jpg' %}" alt=""
+                                                <img src="{% static 'blog/bayazet.jpg' %}" alt=""
                                                      class="uk-align-center uk-height-small">
                                             </div>
                                         </a>
@@ -223,7 +224,7 @@
                                     <div class="uk-card uk-card-default uk-card-hover">
                                         <a href="http://lazydevelo.com">
                                             <div class="uk-card-media-top">
-                                                <img src="{% static 'resume/am.png' %}" alt=""
+                                                <img src="{% static 'blog/am.png' %}" alt=""
                                                      class="uk-align-center uk-height-small">
                                             </div>
                                         </a>
@@ -249,7 +250,7 @@
                                     <div class="uk-card uk-card-default uk-card-hover">
                                         <a href="https://wiki.archlinux.org/index.php/Special:Contributions/Axper">
                                             <div class="uk-card-media-top">
-                                                <img src="{% static 'resume/archlinux.svg' %}" alt=""
+                                                <img src="{% static 'blog/archlinux.svg' %}" alt=""
                                                      class="uk-align-center uk-height-small">
                                             </div>
                                         </a>
@@ -277,7 +278,7 @@
                                     <div class="uk-card uk-card-default uk-card-hover">
                                         <a href="https://github.com/axper">
                                             <div class="uk-card-media-top">
-                                                <img src="{% static 'resume/github.png' %}" alt=""
+                                                <img src="{% static 'blog/github.png' %}" alt=""
                                                      class="uk-align-center uk-height-small">
                                             </div>
                                         </a>
@@ -295,7 +296,7 @@
                                     <div class="uk-card uk-card-default uk-card-hover">
                                         <a href="https://stackoverflow.com/users/2529583/babken-vardanyan">
                                             <div class="uk-card-media-top">
-                                                <img src="{% static 'resume/stackoverflow.png' %}" alt=""
+                                                <img src="{% static 'blog/stackoverflow.png' %}" alt=""
                                                      class="uk-align-center uk-height-small">
                                             </div>
                                         </a>
@@ -421,3 +422,5 @@
     </div>
 
 {% endblock %}
+
+{% endspaceless %}

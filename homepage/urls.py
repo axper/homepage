@@ -25,8 +25,7 @@ urlpatterns = [
     url(r'^django-admin/', admin.site.urls),
     url(r'^wagtail-admin/', include(wagtailadmin_urls)),
     url(r'^documents/', include(wagtaildocs_urls)),
-    url(r'^blog/', include(wagtail_urls)),
-    url(r'^', include('resume.urls', namespace='resume')),
+    url(r'^', include(wagtail_urls)),
 ]
 
 if settings.DEBUG:
