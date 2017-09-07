@@ -1,0 +1,7 @@
+{% load wagtailcore_tags %}
+
+{% spaceless %}
+    <div class="uk-child-width-{{ self.dividend }}-{{ self.divisor }}@m uk-grid-small uk-grid-match" data-uk-grid>
+        {{ self.content }}
+    </div>
+{% endspaceless %}

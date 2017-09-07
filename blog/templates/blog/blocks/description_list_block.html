@@ -1,0 +1,9 @@
+{% load wagtailcore_tags %}
+
+{% spaceless %}
+    <dl class="uk-description-list">
+        {% for pair in value.content %}
+            {% include_block pair %}
+        {% endfor %}
+    </dl>
+{% endspaceless %}

@@ -1,0 +1,6 @@
+{% load wagtailcore_tags %}
+
+{% spaceless %}
+    <h4 id="{{ self.id }}">{{ self.title }}</h4>
+    {{ self.content }}
+{% endspaceless %}

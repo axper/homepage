@@ -1,0 +1,16 @@
+{% load wagtailcore_tags %}
+{% load wagtailimages_tags %}
+
+{% spaceless %}
+    <div class="uk-card uk-card-default uk-card-hover" id="{{ self.id }}">
+        <a href="{{ self.link }}">
+            <div class="uk-card-media-top">
+                {% image self.image height-160 class="uk-align-center" %}
+            </div>
+        </a>
+        <div class="uk-card-body">
+            <h3 class="uk-card-title"><a href="{{ self.link }}">{{ self.title }}</a></h3>
+            {{ self.content }}
+        </div>
+    </div>
+{% endspaceless %}
