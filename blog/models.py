@@ -1,17 +1,14 @@
-from django import forms
 from django.db import models
 from django.db.models import TextField
 from modelcluster.contrib.taggit import ClusterTaggableManager
-from modelcluster.fields import ParentalKey, ParentalManyToManyField
+from modelcluster.fields import ParentalKey
 from taggit.models import TaggedItemBase
-from wagtail.wagtailadmin.edit_handlers import FieldPanel, InlinePanel, MultiFieldPanel, StreamFieldPanel
+from wagtail.wagtailadmin.edit_handlers import FieldPanel, MultiFieldPanel, StreamFieldPanel
 from wagtail.wagtailcore.blocks import StructBlock, CharBlock, RichTextBlock, StreamBlock, IntegerBlock, URLBlock
 from wagtail.wagtailcore.fields import RichTextField, StreamField
 from wagtail.wagtailcore.models import Page, Orderable
 from wagtail.wagtailimages.blocks import ImageChooserBlock
-from wagtail.wagtailimages.edit_handlers import ImageChooserPanel
 from wagtail.wagtailsearch import index
-from wagtail.wagtailsnippets.models import register_snippet
 
 
 class PortfolioCardBlock(StructBlock):
@@ -97,58 +94,56 @@ class SectionBlock(BaseSectionBlock):
         template = 'blog/blocks/section_block.html'
 
 
-class ResumePage(Page):
-    name = TextField(default='Name Surname')
-    sub_heading = TextField(default='Highly trained monkey')
-    sub_sub_heading = TextField(default='Also a programmer')
-    body = StreamField([
+class BaseFormattedPage(Page):
+    heading = TextField(default='Heading')
+    sub_heading = TextField(default='Sub Heading', blank=True)
+    sub_sub_heading = TextField(default='Sub Sub Heading', blank=True)
+
+    content_panels = Page.content_panels + [
+        MultiFieldPanel([
+            FieldPanel('heading'),
+            FieldPanel('sub_heading'),
+            FieldPanel('sub_sub_heading'),
+        ]),
+    ]
+
+    class Meta:
+        abstract = True
+
+
+class ResumePage(BaseFormattedPage):
+    content = StreamField([
         ('section_block', SectionBlock()),
     ], blank=True)
 
-    content_panels = Page.content_panels + [
-        FieldPanel('name'),
-        FieldPanel('sub_heading'),
-        FieldPanel('sub_sub_heading'),
-        StreamFieldPanel('body'),
+    content_panels = BaseFormattedPage.content_panels + [
+        StreamFieldPanel('content'),
     ]
 
 
-class BlogIndexPage(Page):
-    intro = RichTextField(blank=True)
-
-    content_panels = Page.content_panels + [
-        FieldPanel('intro', classname="full")
-    ]
+class BlogIndexPage(BaseFormattedPage):
 
     # noinspection PyMethodOverriding
     def get_context(self, request):
         # Update context to include only published posts, ordered by reverse-chron
         context = super(BlogIndexPage, self).get_context(request)
-        blogpages = self.get_children().live().order_by('-first_published_at')
-        context['blogpages'] = blogpages
+        blog_pages = self.get_children().live().order_by('-first_published_at')
+        context['blog_pages'] = blog_pages
         return context
+
+    subpage_types = ['blog.BlogPage']
 
 
 class BlogPageTag(TaggedItemBase):
     content_object = ParentalKey('BlogPage', related_name='tagged_items')
 
 
-class BlogPage(Page):
+class BlogPage(BaseFormattedPage):
     date = models.DateField("Post date")
-    intro = models.CharField(max_length=250, blank=True)
     body = RichTextField(blank=False)
     tags = ClusterTaggableManager(through=BlogPageTag, blank=True)
-    categories = ParentalManyToManyField('blog.BlogCategory', blank=True)
-
-    def main_image(self):
-        gallery_item = self.gallery_images.first()
-        if gallery_item:
-            return gallery_item.image
-        else:
-            return None
 
     search_fields = Page.search_fields + [
-        index.SearchField('intro'),
         index.SearchField('body'),
     ]
 
@@ -156,25 +151,12 @@ class BlogPage(Page):
         MultiFieldPanel([
             FieldPanel('date'),
             FieldPanel('tags'),
-            FieldPanel('categories', widget=forms.CheckboxSelectMultiple),
         ], heading='Blog information'),
-        FieldPanel('intro'),
         FieldPanel('body', classname="full"),
-        InlinePanel('gallery_images', label='Gallery Images')
     ]
 
-
-class BlogPageGalleryImage(Orderable):
-    page = ParentalKey(BlogPage, related_name='gallery_images')
-    image = models.ForeignKey(
-        'wagtailimages.Image', on_delete=models.CASCADE, related_name='+'
-    )
-    caption = models.CharField(blank=True, max_length=250)
-
-    panels = [
-        ImageChooserPanel('image'),
-        FieldPanel('caption'),
-    ]
+    parent_page_types = ['blog.BlogIndexPage']
+    subpage_types = []
 
 
 class BlogTagIndexPage(Page):
@@ -188,20 +170,3 @@ class BlogTagIndexPage(Page):
         context = super(BlogTagIndexPage, self).get_context(request)
         context['blogpages'] = blogpages
         return context
-
-
-@register_snippet
-class BlogCategory(models.Model):
-    name = models.CharField(max_length=255)
-    icon = models.ForeignKey(
-        'wagtailimages.Image', null=True, blank=True,
-        on_delete=models.SET_NULL, related_name='+'
-    )
-
-    panels = [
-        FieldPanel('name'),
-        ImageChooserPanel('icon'),
-    ]
-
-    def __str__(self):
-        return self.name

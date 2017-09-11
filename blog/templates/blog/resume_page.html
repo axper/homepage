@@ -1,45 +1,11 @@
-{% extends "base.html" %}
+{% extends "base_formatted.html" %}
 
 {% spaceless %}
 
-{% block title %}
-    {{ page.title }}
-{% endblock %}
-
-{% load static wagtailcore_tags %}
-
-{% block content %}
-
-    <div>
-
-        <div class="uk-height-large uk-background-cover uk-light uk-flex" data-uk-parallax="bgy: -200"
-             style="background-image: url('{% static 'blog/abstract-code.jpg' %}');">
-            <div class="uk-width-auto uk-text-center uk-margin-auto uk-margin-auto-vertical">
-                <h1 class="uk-heading-primary uk-text-uppercase uk-width-auto uk-text-center uk-margin-auto uk-margin-auto-vertical">
-                    {{ page.name }}</h1>
-                <p>{{ page.sub_heading }}</p>
-                <p><small>{{ page.sub_sub_heading }}</small></p>
-            </div>
-        </div>
-
-        <div class="uk-container uk-container-small uk-margin uk-margin-remove-bottom">
-            <div class="uk-grid-match uk-flex-column" id="maincontent" data-uk-grid>
-                <div>
-                    {{ page.body }}
-                </div>
-            </div>
-        </div>
-
-        <div class="uk-grid uk-flex-center uk-flex-middle uk-height-small uk-background-secondary">
-            <ul class="uk-iconnav">
-                <li><a href="https://linkedin.com/in/babkenvardanyan" data-uk-icon="icon: linkedin"></a>
-                </li>
-                <li><a href="https://github.com/axper" data-uk-icon="icon: github"></a></li>
-            </ul>
-        </div>
-
-    </div>
-
-{% endblock %}
+    {% block title %}{{ page.title }}{% endblock %}
+    {% block heading %}{{ page.heading }}{% endblock %}
+    {% block sub_heading %}{{ page.sub_heading }}{% endblock %}
+    {% block sub_sub_heading %}{{ page.sub_sub_heading }}{% endblock %}
+    {% block content %}{{ page.content }}{% endblock %}
 
 {% endspaceless %}

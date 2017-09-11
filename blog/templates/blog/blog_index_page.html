@@ -1,27 +1,25 @@
-{% extends "base.html" %}
+{% extends "base_formatted.html" %}
 
-{% load wagtailcore_tags wagtailimages_tags %}
+{% load wagtailcore_tags %}
 
-{% block body_class %}template-blogindexpage{% endblock %}
+{% spaceless %}
 
-{% block content %}
-    <h1>{{ page.title }}</h1>
+    {% block title %}{{ page.title }}{% endblock %}
+    {% block heading %}{{ page.heading }}{% endblock %}
+    {% block sub_heading %}{{ page.sub_heading }}{% endblock %}
+    {% block sub_sub_heading %}{{ page.sub_sub_heading }}{% endblock %}
+    {% block content %}
 
-    <div class="intro">{{ page.intro|richtext }}</div>
+        <div class="uk-section">
+            <ul>
+                {% for post in blog_pages %}
+                    {% with post=post.specific %}
+                        <li><a href="{% pageurl post %}">{{ post.title }}</a></li>
+                    {% endwith %}
+                {% endfor %}
+            </ul>
+        </div>
 
-    {% for post in blogpages %}
-        {% with post=post.specific %}
-            <h2><a href="{% pageurl post %}">{{ post.title }}</a></h2>
+    {% endblock %}
 
-            {% with post.main_image as main_image %}
-                {% if main_image %}
-                    {% image main_image fill-160x100 %}
-                {% endif %}
-            {% endwith %}
-
-            <p>{{ post.intro }}</p>
-            {{ post.body|richtext }}
-        {% endwith %}
-    {% endfor %}
-
-{% endblock %}
+{% endspaceless %}
