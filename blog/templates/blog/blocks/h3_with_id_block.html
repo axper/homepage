@@ -1,6 +1,10 @@
 {% load wagtailcore_tags %}
 
 {% spaceless %}
-    <h3 id="{{ self.id }}">{{ self.title }}</h3>
+    <h3
+            {% if self.id|length > 0 %}
+                id="{{ self.id }}"
+            {% endif %}
+    >{{ self.title }}</h3>
     {{ self.content }}
 {% endspaceless %}

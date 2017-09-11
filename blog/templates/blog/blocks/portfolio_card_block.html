@@ -2,7 +2,11 @@
 {% load wagtailimages_tags %}
 
 {% spaceless %}
-    <div class="uk-card uk-card-default uk-card-hover" id="{{ self.id }}">
+    <div class="uk-card uk-card-default uk-card-hover"
+            {% if self.id|length > 0 %}
+         id="{{ self.id }}"
+            {% endif %}
+    >
         <a href="{{ self.link }}">
             <div class="uk-card-media-top">
                 {% image self.image height-160 class="uk-align-center" %}
