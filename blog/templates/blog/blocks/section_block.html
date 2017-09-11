@@ -1,11 +1,7 @@
 {% load wagtailcore_tags %}
 
 {% spaceless %}
-    <div class="uk-section-small"
-            {% if self.id|length > 0 %}
-         id="{{ self.id }}"
-            {% endif %}
-    >
+    <div class="uk-section-small" {% if self.id|length > 0 %} id="{{ self.id }}"{% endif %}>
         <div class="uk-container">
             <h2>{{ self.title }}</h2>
             {{ self.content }}
