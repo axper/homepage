@@ -63,6 +63,7 @@
     environment:
       DJANGO_SETTINGS_MODULE: "{{ django_settings }}"
     register: superuser_check_output
+    changed_when: "superuser_check_output.stdout.find(\"True\") != 0"
   - name: set superuser_exists boolean
     set_fact:
       superuser_exists: "{{ superuser_check_output.stdout.find(\"True\") == 0 }}"
