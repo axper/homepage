@@ -4,13 +4,15 @@ from modelcluster.contrib.taggit import ClusterTaggableManager
 from modelcluster.fields import ParentalKey
 from taggit.models import TaggedItemBase
 from wagtail.wagtailadmin.edit_handlers import FieldPanel, MultiFieldPanel, StreamFieldPanel
-from wagtail.wagtailcore.blocks import StructBlock, CharBlock, RichTextBlock, StreamBlock, IntegerBlock, URLBlock
+from wagtail.wagtailcore.blocks import StructBlock, CharBlock, RichTextBlock, StreamBlock, IntegerBlock, URLBlock, \
+    PageChooserBlock
 from wagtail.wagtailcore.fields import RichTextField, StreamField
 from wagtail.wagtailcore.models import Page, Orderable
 from wagtail.wagtailimages.blocks import ImageChooserBlock
 from wagtail.wagtailsearch import index
 
 
+# region Resume Blocks
 class PortfolioCardBlock(StructBlock):
     id = CharBlock(required=False)
     title = CharBlock()
@@ -94,6 +96,10 @@ class SectionBlock(BaseSectionBlock):
         template = 'blog/blocks/section_block.html'
 
 
+# endregion
+
+
+# region Pages
 class BaseFormattedPage(Page):
     heading = TextField(default='Heading')
     sub_heading = TextField(default='Sub Heading', blank=True)
@@ -104,11 +110,21 @@ class BaseFormattedPage(Page):
             FieldPanel('heading'),
             FieldPanel('sub_heading'),
             FieldPanel('sub_sub_heading'),
-        ]),
+        ], heading='Headings'),
     ]
 
     class Meta:
         abstract = True
+
+
+class HomePage(BaseFormattedPage):
+    content = StreamField([
+        ('pages', PageChooserBlock()),
+    ])
+
+    content_panels = BaseFormattedPage.content_panels + [
+        StreamFieldPanel('content'),
+    ]
 
 
 class ResumePage(BaseFormattedPage):
@@ -122,7 +138,6 @@ class ResumePage(BaseFormattedPage):
 
 
 class BlogIndexPage(BaseFormattedPage):
-
     # noinspection PyMethodOverriding
     def get_context(self, request):
         # Update context to include only published posts, ordered by reverse-chron
@@ -162,11 +177,10 @@ class BlogPage(BaseFormattedPage):
 class BlogTagIndexPage(Page):
     # noinspection PyMethodOverriding
     def get_context(self, request):
-        # Filter by tag
         tag = request.GET.get('tag')
-        blogpages = BlogPage.objects.filter(tags__name=tag)
-
-        # Update template context
+        blog_pages = BlogPage.objects.filter(tags__name=tag)
         context = super(BlogTagIndexPage, self).get_context(request)
-        context['blogpages'] = blogpages
+        context['blog_pages'] = blog_pages
         return context
+
+# endregion

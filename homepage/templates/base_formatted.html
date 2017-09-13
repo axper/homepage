@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% load static static %}
+{% load static %}
 
 {% spaceless %}
 
@@ -10,11 +10,11 @@
              style="background-image: url('{% static 'blog/abstract-code.jpg' %}');">
             <div class="uk-width-auto uk-text-center uk-margin-auto uk-margin-auto-vertical">
                 <h1 class="uk-heading-primary uk-text-uppercase uk-width-auto uk-text-center uk-margin-auto uk-margin-auto-vertical">
-                    {% block heading %}{% endblock %}
+                    {% block heading %}{% endblock heading %}
                 </h1>
-                <p>{% block sub_heading %}{% endblock %}</p>
+                <p>{% block sub_heading %}{% endblock sub_heading %}</p>
                 <p>
-                    <small>{% block sub_sub_heading %}{% endblock %}</small>
+                    <small>{% block sub_sub_heading %}{% endblock sub_sub_heading %}</small>
                 </p>
             </div>
         </div>
@@ -22,18 +22,13 @@
         <div class="uk-container uk-container-small uk-margin uk-margin-remove-bottom">
             <div class="uk-grid-match uk-flex-column" id="maincontent" data-uk-grid>
                 <div>
-                    {% block content %}{% endblock %}
+                    {% block content %}{% endblock content %}
                 </div>
             </div>
         </div>
 
-        <div class="uk-grid uk-flex-center uk-flex-middle uk-height-small uk-background-secondary">
-            <ul class="uk-iconnav">
-                <li><a href="https://linkedin.com/in/babkenvardanyan" data-uk-icon="icon: linkedin"></a></li>
-                <li><a href="https://github.com/axper" data-uk-icon="icon: github"></a></li>
-            </ul>
-        </div>
+        {% include "footer.html" %}
 
-    {% endblock %}
+    {% endblock html_body %}
 
 {% endspaceless %}
