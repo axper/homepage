@@ -96,6 +96,14 @@ class SectionBlock(BaseSectionBlock):
         template = 'blog/blocks/section_block.html'
 
 
+class HomePageCardBlock(StructBlock):
+    page = PageChooserBlock()
+    content = RichTextBlock()
+
+    class Meta:
+        template = 'blog/blocks/home_page_card_block.html'
+
+
 # endregion
 
 
@@ -119,7 +127,7 @@ class BaseFormattedPage(Page):
 
 class HomePage(BaseFormattedPage):
     content = StreamField([
-        ('pages', PageChooserBlock()),
+        ('link_blocks', HomePageCardBlock()),
     ])
 
     content_panels = BaseFormattedPage.content_panels + [

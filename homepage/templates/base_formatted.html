@@ -2,16 +2,15 @@
 
 {% load static %}
 
-{% spaceless %}
+{% block html_body %}
 
-    {% block html_body %}
+    {% spaceless %}
 
         <div class="uk-height-large uk-background-cover uk-light uk-flex" data-uk-parallax="bgy: -200"
              style="background-image: url('{% static 'blog/abstract-code.jpg' %}');">
             <div class="uk-width-auto uk-text-center uk-margin-auto uk-margin-auto-vertical">
                 <h1 class="uk-heading-primary uk-text-uppercase uk-width-auto uk-text-center uk-margin-auto uk-margin-auto-vertical">
-                    {% block heading %}{% endblock heading %}
-                </h1>
+                    {% block heading %}{% endblock heading %}</h1>
                 <p>{% block sub_heading %}{% endblock sub_heading %}</p>
                 <p>
                     <small>{% block sub_sub_heading %}{% endblock sub_sub_heading %}</small>
@@ -29,6 +28,6 @@
 
         {% include "footer.html" %}
 
-    {% endblock html_body %}
+    {% endspaceless %}
 
-{% endspaceless %}
+{% endblock html_body %}
