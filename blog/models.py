@@ -166,11 +166,11 @@ class BlogPage(BaseFormattedPage):
     body = RichTextField(blank=False)
     tags = ClusterTaggableManager(through=BlogPageTag, blank=True)
 
-    search_fields = Page.search_fields + [
+    search_fields = BaseFormattedPage.search_fields + [
         index.SearchField('body'),
     ]
 
-    content_panels = Page.content_panels + [
+    content_panels = BaseFormattedPage.content_panels + [
         MultiFieldPanel([
             FieldPanel('date'),
             FieldPanel('tags'),
