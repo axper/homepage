@@ -3,13 +3,13 @@ from django.db.models import TextField
 from modelcluster.contrib.taggit import ClusterTaggableManager
 from modelcluster.fields import ParentalKey
 from taggit.models import TaggedItemBase
-from wagtail.wagtailadmin.edit_handlers import FieldPanel, MultiFieldPanel, StreamFieldPanel
-from wagtail.wagtailcore.blocks import StructBlock, CharBlock, RichTextBlock, StreamBlock, IntegerBlock, URLBlock, \
+from wagtail.admin.edit_handlers import FieldPanel, MultiFieldPanel, StreamFieldPanel
+from wagtail.core.blocks import StructBlock, CharBlock, RichTextBlock, StreamBlock, IntegerBlock, URLBlock, \
     PageChooserBlock
-from wagtail.wagtailcore.fields import RichTextField, StreamField
-from wagtail.wagtailcore.models import Page, Orderable
-from wagtail.wagtailimages.blocks import ImageChooserBlock
-from wagtail.wagtailsearch import index
+from wagtail.core.fields import RichTextField, StreamField
+from wagtail.core.models import Page, Orderable
+from wagtail.images.blocks import ImageChooserBlock
+from wagtail.search import index
 
 
 # region Resume Blocks

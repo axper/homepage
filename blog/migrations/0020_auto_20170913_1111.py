@@ -3,7 +3,7 @@
 from __future__ import unicode_literals
 
 import django.db.models.deletion
-import wagtail.wagtailcore.fields
+import wagtail.core.fields
 from django.db import migrations, models
 
 
@@ -23,7 +23,7 @@ class Migration(migrations.Migration):
                 ('heading', models.TextField(default='Heading')),
                 ('sub_heading', models.TextField(blank=True, default='Sub Heading')),
                 ('sub_sub_heading', models.TextField(blank=True, default='Sub Sub Heading')),
-                ('content', wagtail.wagtailcore.fields.StreamField(())),
+                ('content', wagtail.core.fields.StreamField(())),
             ],
             options={
                 'abstract': False,
