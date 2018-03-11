@@ -14,3 +14,4 @@ http://docs.ansible.com/ansible/latest/playbooks_vault.html
 6. To speed up ansible optionally set `pipelining = True` in
 `/etc/ansible/ansible.cfg`.
 7. Run `ansible-playbook deploy/ansible-deploy-production.yml`
+8. Ssh to server and run certbot by letsencrypt.org
