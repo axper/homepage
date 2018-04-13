@@ -3,15 +3,11 @@ html {
 }
 
 body {
-    min-height: 100%;
-    position: relative;
-    padding-bottom: 10em;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
 }
 
-.footer {
-    position: absolute;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    height: 10em;
+.content {
+    flex: 1;
 }
