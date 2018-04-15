@@ -1,5 +1,4 @@
 from django.db import models
-from django.db.models import TextField
 from modelcluster.contrib.taggit import ClusterTaggableManager
 from modelcluster.fields import ParentalKey
 from taggit.models import TaggedItemBase
@@ -109,17 +108,6 @@ class HomePageCardBlock(StructBlock):
 
 # region Pages
 class BaseFormattedPage(Page):
-    heading = TextField(default='Heading')
-    sub_heading = TextField(default='Sub Heading', blank=True)
-    sub_sub_heading = TextField(default='Sub Sub Heading', blank=True)
-
-    content_panels = Page.content_panels + [
-        MultiFieldPanel([
-            FieldPanel('heading'),
-            FieldPanel('sub_heading'),
-            FieldPanel('sub_sub_heading'),
-        ], heading='Headings'),
-    ]
 
     class Meta:
         abstract = True
