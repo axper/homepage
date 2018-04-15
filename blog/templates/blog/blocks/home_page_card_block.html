@@ -1,4 +1,4 @@
-<a href="{{ self.page.url }}" class="uk-link-reset">
+<a href="{% if self.page %}{{ self.page.url }}{% else %}{{ self.url }}{% endif %}" class="uk-link-reset">
     <div class="uk-card uk-card-primary uk-card-hover uk-card-body uk-light">
         {{ self.content }}
     </div>

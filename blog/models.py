@@ -96,11 +96,13 @@ class SectionBlock(BaseSectionBlock):
 
 
 class HomePageCardBlock(StructBlock):
-    page = PageChooserBlock()
+    page = PageChooserBlock(required=False)
+    url = URLBlock(required=False)
     content = RichTextBlock()
 
     class Meta:
         template = 'blog/blocks/home_page_card_block.html'
+        help_text = 'One of Page or Url is required'
 
 
 # endregion
