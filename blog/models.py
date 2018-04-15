@@ -1,7 +1,4 @@
 from django.db import models
-from modelcluster.contrib.taggit import ClusterTaggableManager
-from modelcluster.fields import ParentalKey
-from taggit.models import TaggedItemBase
 from wagtail.admin.edit_handlers import FieldPanel, MultiFieldPanel, StreamFieldPanel
 from wagtail.core.blocks import StructBlock, CharBlock, RichTextBlock, StreamBlock, IntegerBlock, URLBlock, \
     PageChooserBlock
@@ -147,14 +144,9 @@ class BlogIndexPage(BaseFormattedPage):
     subpage_types = ['blog.BlogPage']
 
 
-class BlogPageTag(TaggedItemBase):
-    content_object = ParentalKey('BlogPage', related_name='tagged_items')
-
-
 class BlogPage(BaseFormattedPage):
     date = models.DateField("Post date")
     body = RichTextField(blank=False)
-    tags = ClusterTaggableManager(through=BlogPageTag, blank=True)
 
     search_fields = BaseFormattedPage.search_fields + [
         index.SearchField('body'),
@@ -163,22 +155,10 @@ class BlogPage(BaseFormattedPage):
     content_panels = BaseFormattedPage.content_panels + [
         MultiFieldPanel([
             FieldPanel('date'),
-            FieldPanel('tags'),
         ], heading='Blog information'),
         FieldPanel('body', classname="full"),
     ]
 
     parent_page_types = ['blog.BlogIndexPage']
     subpage_types = []
-
-
-class BlogTagIndexPage(Page):
-    # noinspection PyMethodOverriding
-    def get_context(self, request):
-        tag = request.GET.get('tag')
-        blog_pages = BlogPage.objects.filter(tags__name=tag)
-        context = super(BlogTagIndexPage, self).get_context(request)
-        context['blog_pages'] = blog_pages
-        return context
-
 # endregion
