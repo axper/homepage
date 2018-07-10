@@ -19,6 +19,10 @@ h1, h2, h3, h4, h5, h6 {
     flex: 1;
 }
 
-.header {
+.min-height-300 {
     min-height: 300px;
+}
+
+.background-grey {
+    background-color: #bdbdbd;
 }
