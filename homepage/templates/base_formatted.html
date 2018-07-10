@@ -8,14 +8,14 @@
 
         <div class="content">
 
-            <div class="uk-height-medium uk-background-cover uk-flex uk-background-muted">
+            <div class="uk-background-cover uk-flex uk-background-muted header">
                 <div class="uk-width-auto uk-text-center uk-margin-auto uk-margin-auto-vertical">
                     <h1 class="uk-heading-primary uk-text-uppercase uk-width-auto uk-text-center uk-margin-auto uk-margin-auto-vertical">{% block title %}{% endblock title %}</h1>
                 </div>
             </div>
 
             <div class="uk-container uk-container-small uk-margin-large">
-                <div class="uk-grid-match uk-flex-column" id="maincontent" data-uk-grid>
+                <div class="uk-grid-match uk-flex-column" data-uk-grid>
                     <div>
                         {% block content %}{% endblock content %}
                     </div>
