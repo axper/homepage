@@ -16,8 +16,6 @@ PROJECT_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 BASE_DIR = os.path.dirname(PROJECT_DIR)
 
 INSTALLED_APPS = [
-    'blog',
-
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -39,6 +37,9 @@ INSTALLED_APPS = [
 
     'modelcluster',
     'taggit',
+
+    # Apps in this project
+    'blog',
 ]
 
 MIDDLEWARE = [
@@ -59,9 +60,6 @@ ROOT_URLCONF = 'homepage.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [
-            os.path.join(PROJECT_DIR, 'templates')
-        ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
