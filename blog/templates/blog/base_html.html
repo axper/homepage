@@ -7,18 +7,20 @@
 
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/uikit/3.0.0-rc.8/css/uikit.css"/>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/uikit/3.0.0-rc.11/css/uikit.min.css"/>
         <link rel="stylesheet" href="{% static 'css/main.css' %}"/>
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Noto+Sans">
         <link rel="icon" type="image/png" href="{% static 'favicon-32x32.png' %}" sizes="32x32"/>
         <link rel="icon" type="image/png" href="{% static 'favicon-16x16.png' %}" sizes="16x16"/>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/uikit/3.0.0-rc.8/js/uikit.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/uikit/3.0.0-rc.8/js/uikit-icons.js"></script>
+
         {% block head %}{% endblock head %}
     </head>
     <body>
     {% block html_body %}{% endblock html_body %}
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/uikit/3.0.0-rc.11/js/uikit.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/uikit/3.0.0-rc.11/js/uikit-icons.min.js"></script>
     </body>
     </html>
 {% endspaceless %}
