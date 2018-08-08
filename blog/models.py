@@ -1,4 +1,5 @@
 from django.db import models
+from django.utils import timezone
 from wagtail.admin.edit_handlers import FieldPanel, MultiFieldPanel, StreamFieldPanel
 from wagtail.core.blocks import StructBlock, CharBlock, RichTextBlock, StreamBlock, IntegerBlock, URLBlock, \
     PageChooserBlock
@@ -145,7 +146,7 @@ class BlogIndexPage(BaseFormattedPage):
 
 
 class BlogPage(BaseFormattedPage):
-    date = models.DateField("Post date")
+    date = models.DateField("Post date", default=timezone.now)
     body = RichTextField(blank=False)
 
     search_fields = BaseFormattedPage.search_fields + [
