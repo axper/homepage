@@ -6,8 +6,23 @@ body {
     display: flex;
     flex-direction: column;
     min-height: 100vh;
+    font-family: Noto Sans, sans-serif;
+    line-height: 1.9;
+    font-size: 1.3em;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: Noto Sans, sans-serif;
 }
 
 .content {
     flex: 1;
+}
+
+.min-height-header-footer {
+    min-height: 10em;
+}
+
+.background-grey {
+    background-color: #bdbdbd;
 }
