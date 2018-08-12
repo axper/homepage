@@ -11,7 +11,10 @@
             <ul>
                 {% for post in blog_pages %}
                     {% with post=post.specific %}
-                        <li><a href="{% pageurl post %}">{{ post.title }}</a></li>
+                        <li>
+                            <a href="{% pageurl post %}">{{ post.title }}</a>
+                            <span class="uk-align-right uk-margin-remove-bottom uk-text-meta">{{ post.date }}</span>
+                        </li>
                     {% endwith %}
                 {% endfor %}
             </ul>
