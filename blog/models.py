@@ -38,6 +38,8 @@ class Home(BaseFormattedPage):
 
 
 class BlogIndex(BaseFormattedPage):
+    banner = models.ImageField(blank=True)
+
     # noinspection PyMethodOverriding
     def get_context(self, request):
         # Update context to include only published posts, ordered by reverse-chron
@@ -46,11 +48,15 @@ class BlogIndex(BaseFormattedPage):
         context['blog_pages'] = blog_pages
         return context
 
+    content_panels = BaseFormattedPage.content_panels + [
+        FieldPanel('banner'),
+    ]
     subpage_types = ['blog.Blog']
 
 
 class Blog(BaseFormattedPage):
     date = models.DateField('Post date', default=timezone.now)
+    banner = models.ImageField(blank=True)
     body = RichTextField(blank=False)
 
     search_fields = BaseFormattedPage.search_fields + [
@@ -60,6 +66,7 @@ class Blog(BaseFormattedPage):
     content_panels = BaseFormattedPage.content_panels + [
         MultiFieldPanel([
             FieldPanel('date'),
+            FieldPanel('banner'),
         ], heading='Blog information'),
         FieldPanel('body', classname='full'),
     ]

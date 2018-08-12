@@ -8,9 +8,12 @@
 
         <div class="content">
 
-            <div class="uk-background-cover uk-flex background-grey min-height-header-footer">
+            <div class="uk-background-cover uk-flex background-grey min-height-header-footer"
+                 {% if page.banner %}style="background-image: url({{ page.banner.url }});"{% endif %}>
                 <div class="uk-width-auto uk-text-center uk-margin-auto uk-margin-auto-vertical">
-                    <h1 class="uk-heading-primary uk-text-uppercase uk-width-auto uk-text-center uk-margin-auto uk-margin-auto-vertical">{% block title %}{% endblock title %}</h1>
+                    <h1 class="uk-heading-primary uk-text-uppercase uk-width-auto uk-text-center uk-margin-auto uk-margin-auto-vertical white-text-shadow">
+                        {% block title %}{% endblock title %}
+                    </h1>
                 </div>
             </div>
 
