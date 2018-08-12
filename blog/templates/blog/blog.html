@@ -1,6 +1,7 @@
 {% extends "blog/base_formatted.html" %}
 
 {% load wagtailcore_tags wagtailimages_tags %}
+{% load disqus_tags %}
 
 {% spaceless %}
 
@@ -11,6 +12,8 @@
         {{ page.body|richtext }}
 
         <p><a href="{{ page.get_parent.url }}">Return to blog</a></p>
+
+        {% disqus_show_comments %}
 
     {% endblock %}
 

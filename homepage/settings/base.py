@@ -22,6 +22,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.sites',
 
     'wagtail.contrib.forms',
     'wagtail.contrib.redirects',
@@ -37,6 +38,7 @@ INSTALLED_APPS = [
 
     'modelcluster',
     'taggit',
+    'disqus',
 
     # Apps in this project
     'blog',
@@ -110,6 +112,9 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 WAGTAIL_SITE_NAME = 'Babken \'s Homepage'
+
+# Disqus
+DISQUS_WEBSITE_SHORTNAME = 'lazydevelo'
 
 # Logging
 LOGGING = {
