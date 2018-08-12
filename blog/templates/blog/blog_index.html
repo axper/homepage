@@ -13,7 +13,7 @@
                     {% with post=post.specific %}
                         <li>
                             <a href="{% pageurl post %}">{{ post.title }}</a>
-                            <span class="uk-align-right uk-margin-remove-bottom uk-text-meta">{{ post.date }}</span>
+                            <span class="uk-align-right uk-margin-remove-bottom uk-text-meta uk-visible@l">{{ post.date }}</span>
                         </li>
                     {% endwith %}
                 {% endfor %}
