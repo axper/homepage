@@ -3,9 +3,9 @@
 {% load static %}
 {% load disqus_tags %}
 
-{% block html_body %}
+{% block title %}{{ page.title }}{% endblock %}
 
-    {% block title %}{{ page.title }}{% endblock %}
+{% block html_body %}
 
     {% spaceless %}
 
