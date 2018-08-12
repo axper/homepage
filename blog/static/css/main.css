@@ -27,6 +27,7 @@ h1, h2, h3, h4, h5, h6 {
     background-color: #bdbdbd;
 }
 
-.white-text-shadow {
-    text-shadow: white 0.05em 0.05em 0.05em;
+.inverse-text-color-background {
+    mix-blend-mode: exclusion;
+    color: white;
 }
