@@ -37,8 +37,11 @@
 
   # Prepare Django
   - name: copy django secret key to server
-    # Here django_secret_key is read from hosts's ansible config
     copy: content="{{ django_secret_key }}" dest="{{ app_dir }}/deploy/django-secret-key.txt" mode=0600
+  - name: copy aws access key id to server
+    copy: content="{{ aws_access_key_id }}" dest="{{ app_dir }}/deploy/aws-access-key-id.txt" mode=0600
+  - name: copy aws secret access key to server
+    copy: content="{{ aws_secret_access_key }}" dest="{{ app_dir }}/deploy/aws-secret-access-key.txt" mode=0600
   - name: create virtualenv
     pip: virtualenv="{{ venv_dir }}" virtualenv_python=python3 requirements="{{ app_dir }}/requirements.txt"
   - name: django collect static files
