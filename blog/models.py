@@ -73,4 +73,16 @@ class Blog(BaseFormattedPage):
 
     parent_page_types = ['blog.BlogIndex']
     subpage_types = []
+
+
+class Map(BaseFormattedPage):
+    template = 'carav/map.html'
+    banner = models.ImageField(blank=True)
+
+    content_panels = BaseFormattedPage.content_panels + [
+        FieldPanel('banner'),
+    ]
+
+    parent_page_types = ['blog.Home']
+    subpage_types = []
 # endregion

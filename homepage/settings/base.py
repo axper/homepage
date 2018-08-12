@@ -40,9 +40,11 @@ INSTALLED_APPS = [
     'taggit',
     'disqus',
     'storages',
+    'django_extensions',
 
     # Apps in this project
     'blog',
+    'carav',
 ]
 
 MIDDLEWARE = [

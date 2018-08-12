@@ -1,0 +1,158 @@
+{% extends "blog/base_html.html" %}
+
+{% load static %}
+{% load disqus_tags %}
+
+{% block html_body %}
+
+    {% spaceless %}
+
+        <div class="content">
+
+            <div class="uk-background-cover uk-flex background-grey min-height-header-footer"
+                 {% if page.banner %}style="background-image: url({{ page.banner.url }});"{% endif %}>
+                <div class="uk-width-auto uk-text-center uk-margin-auto uk-margin-auto-vertical">
+                    <h1 class="uk-heading-primary uk-text-uppercase uk-width-auto uk-text-center uk-margin-auto uk-margin-auto-vertical inverse-text-color-background">
+                        {{ page.title }}
+                    </h1>
+                </div>
+            </div>
+
+            <div class="uk-container uk-container-large uk-margin-large">
+                <div id="map" class="uk-margin-bottom yerevan-map"></div>
+                <div hidden>
+                    <div id="form">
+
+                        <fieldset class="uk-fieldset">
+
+                            <legend class="uk-legend">Water Fountain</legend>
+
+                            <div class="uk-margin">
+                                <input type="button" class="uk-button uk-button-primary uk-width-1-1"
+                                       value="Save" onclick="createOrUpdateWaterFountain()"/>
+                            </div>
+
+                            <div class="uk-margin">
+                                <input type="button" class="uk-button uk-button-danger uk-width-1-1"
+                                       value="Delete" onclick="deleteWaterFountain()"/>
+                            </div>
+
+                        </fieldset>
+
+                    </div>
+                </div>
+
+                {% disqus_show_comments %}
+            </div>
+
+        </div>
+
+        {% include "blog/components/footer.html" %}
+
+        <script>
+            function initMap() {
+                var yerevan_republic_square = {lat: 40.1774452, lng: 44.5129515};
+                var map = new google.maps.Map(document.getElementById('map'), {
+                    zoom: 14,
+                    center: yerevan_republic_square
+                });
+
+                infowindow = new google.maps.InfoWindow({
+                    content: document.getElementById('form')
+                });
+
+                google.maps.event.addListener(map, 'click', function (event) {
+                    if (marker && marker.id == null) {
+                        marker.setMap(null);
+                    }
+                    marker = new google.maps.Marker({position: event.latLng, map: map, draggable: true});
+                    addClickListener(marker);
+                    infowindow.open(map, marker);
+                    google.maps.event.addListener(infowindow, 'closeclick', function (event) {
+                        console.log('info window closed');
+                        if (marker.id == null) {
+                            marker.setMap(null);
+                        }
+                    });
+                });
+
+                $.getJSON("{% url 'carav:all_water_fountains' %}", function (data) {
+                    $.each(data['data'], function (key, val) {
+                        marker = new google.maps.Marker({position: val, id: val.id, map: map, draggable: true});
+                        addClickListener(marker);
+                    });
+                });
+            }
+
+            function addClickListener(marker_to_add_listener_to) {
+                google.maps.event.addListener(marker_to_add_listener_to, 'click', (function (mrk) {
+                    return function () {
+                        marker = mrk;
+                        infowindow.open(map, mrk);
+                    }
+                })(marker_to_add_listener_to));
+            }
+
+            function createOrUpdateWaterFountain() {
+                lat = marker.getPosition().lat();
+                lng = marker.getPosition().lng();
+                if (marker.id) {
+                    $.post("{% url "carav:update_water_fountain" %}",
+                        {
+                            lat: lat,
+                            lng: lng,
+                            id: marker.id,
+                            csrfmiddlewaretoken: '{{ csrf_token }}'
+                        })
+                        .done(function (data) {
+                            UIkit.notification({message: 'Water fountain updated. Lat: ' + lat + ', Lng: ' + lng + '!'});
+                            infowindow.close();
+                        })
+                        .fail(function () {
+                            UIkit.notification({message: 'Failed updating water fountain.', status: 'danger'});
+                        });
+                } else {
+                    $.post("{% url "carav:create_water_fountain" %}",
+                        {
+                            lat: lat,
+                            lng: lng,
+                            csrfmiddlewaretoken: '{{ csrf_token }}'
+                        })
+                        .done(function (data) {
+                            UIkit.notification({message: 'New water fountain added. Lat: ' + lat + ', Lng: ' + lng + '!'});
+                            marker.id = data.id;
+                            infowindow.close();
+                        })
+                        .fail(function () {
+                            UIkit.notification({message: 'Failed adding new water fountain.', status: 'danger'});
+                        });
+                }
+            }
+
+            function deleteWaterFountain() {
+                id = marker.id;
+                if (id == null) {
+                    marker.setMap(null);
+                    return;
+                }
+                $.post("{% url "carav:delete_water_fountain" %}",
+                    {
+                        id: id,
+                        csrfmiddlewaretoken: '{{ csrf_token }}'
+                    })
+                    .done(function () {
+                        UIkit.notification({message: 'Water fountain deleted!'});
+                        marker.setMap(null);
+                    })
+                    .fail(function () {
+                        UIkit.notification({message: 'Failed deleting water fountain.', status: 'danger'});
+                    });
+            }
+
+        </script>
+        <script async defer
+                src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCv9ceYkFkzo-P8MmRIvJxxeU-mcfEBdOI&callback=initMap"></script>
+
+    {% endspaceless %}
+
+{% endblock html_body %}
