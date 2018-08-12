@@ -50,7 +50,7 @@ class BlogIndex(BaseFormattedPage):
 
 
 class Blog(BaseFormattedPage):
-    date = models.DateField("Post date", default=timezone.now)
+    date = models.DateField('Post date', default=timezone.now)
     body = RichTextField(blank=False)
 
     search_fields = BaseFormattedPage.search_fields + [
@@ -61,7 +61,7 @@ class Blog(BaseFormattedPage):
         MultiFieldPanel([
             FieldPanel('date'),
         ], heading='Blog information'),
-        FieldPanel('body', classname="full"),
+        FieldPanel('body', classname='full'),
     ]
 
     parent_page_types = ['blog.BlogIndex']
