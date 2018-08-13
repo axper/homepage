@@ -18,3 +18,13 @@ http://docs.ansible.com/ansible/latest/playbooks_vault.html
 `/etc/ansible/ansible.cfg`.
 7. Run `ansible-playbook deploy/ansible-deploy-production.yml`
 8. Ssh to server and run certbot by letsencrypt.org
+
+TODO
+----
+
+1. Move carav to separate domain, possibly carav.am
+2. Hide info window upon page initialization
+3. Resize embedded map based on user's screen size, particularly on mobile browsers
+4. Show user's current location on map
+5. Introduce a proper security model
+6. Add share buttons
