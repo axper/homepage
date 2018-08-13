@@ -25,7 +25,7 @@ urlpatterns = [
     url(r'^wagtail-admin/', include(wagtailadmin_urls)),
     url(r'^documents/', include(wagtaildocs_urls)),
     url(r'^', include(wagtail_urls)),
-    url(r'^', include('carav.urls', namespace='carav')),
+    url(r'^carav/', include('carav.urls', namespace='carav')),
 ]
 
 if settings.DEBUG:
