@@ -116,6 +116,8 @@ WAGTAIL_SITE_NAME = 'Babken \'s Homepage'
 # Disqus
 DISQUS_WEBSITE_SHORTNAME = 'lazydevelo'
 
+SITE_ID = 1
+
 # Logging
 LOGGING = {
     'version': 1,
